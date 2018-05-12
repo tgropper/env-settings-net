@@ -90,12 +90,19 @@ public class Startup
 
 ## Example
 
-Rename the `launchSettings-example.json` to `launchSettings.json` and then run the example using the `dotnet` CLI or within the `Visual Studio`.
+Rename the `launchSettings-example.json` to `launchSettings.json` and then run the example within `Visual Studio` or using the `dotnet` CLI:
 
 ```
-cd .\examples\EnvSettings.Example.WebApp\
+cd examples/EnvSettings.Example.WebApp
 dotnet build
 dotnet run --launch-profile {Environment} // try using different values (Development|Staging) to see different outputs
+```
+
+Or with `Docker` from root directory::
+
+```
+docker build -t env-settings-net -f examples/EnvSettings.Example.WebApp/Dockerfile .
+docker run -it -p 8000:80 -e ASPNETCORE_ENVIRONMENT=Development -e MONGO_HOST=localhost -e MONGO_PORT=27017 -e MONGO_DATABASE=env-settings-net-dev env-settings-net
 ```
 
 ## Motivation
