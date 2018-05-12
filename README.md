@@ -88,6 +88,8 @@ public class Startup
 
 **FAQ**: Why the *placeholderPrefixes*? Just to be sure that the values being replaced in your configuration are the one that you are expecting to be replaced.
 
+**IMPORTANT**: It is highly recommended that you combine this library with [`EnvSafe`](https://github.com/tgropper/env-safe-net) to prevent unexpected behaviours in runtime. If you forget any env var that has to replace a placeholder, then your configuration will keep that placeholder as the variable value.
+
 ## Example
 
 Rename the `launchSettings-example.json` to `launchSettings.json` and then run the example within `Visual Studio` or using the `dotnet` CLI:
