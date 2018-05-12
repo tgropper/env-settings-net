@@ -1,22 +1,11 @@
 # env-settings-net
 Replace placeholders from appsettings files with values loaded from environment variables.
 
-
-Good application configuration *must* be through environment variables. It gives the opportunity to reuse already existing configs or secrets in the environment where your application is being deployed (in fact, the motivation of this library is to take advantage of `ConfigMaps` and `Secrets` in `Kubernetes`).
-
-Sometimes using environment variables to configure the entire application can be challenging and repeatable. For example, if your application uses a `mongo` connection string, then in `.net core` you would have two options (there are more options but this two are the nicest):
-1. Define the connection string in each `appsettings.{environment}.json` like this:
-* `appsettings.Development.json`: `mongodb://dev-user:dev-pass@dev-host:dev-port`.
-* `appsettings.Production.json`: `mongodb://prod-user:prod-pass@prod-host:prod-port`.
-* And so on for all your environments.
-
-2. Pass the connection string as environment variable. So if you use different infrastructure in each environment you must configure your run files to have this tedious conn string (and we are using mongo as example and not a RDB conn string). This could be a `launchSettings.json` in dev, `docker-compose.yml` in qa or `Kubernetes` yamls in prod.
-
-
-This means that in every environment you must hardcode the entire conn string. There is no midpoint, even when it's clear that the conn string is a static template that has dynamic variables depending on the environment where your application is running.
-
-## Install
-`PM> Install-Package EnvSettings`
+## Install [![NuGet](https://img.shields.io/nuget/v/EnvSettings.svg)](https://www.nuget.org/packages/EnvSettings)
+From the package manager console:
+```
+PM> Install-Package EnvSettings
+```
 
 ## Usage
 
@@ -98,6 +87,21 @@ public class Startup
 ```
 
 **FAQ**: Why the *placeholderPrefixes*? Just to be sure that the values being replace in your configuration are the one that you are expecting to be replaced.
+
+## Motivation
+
+Good application configuration *must* be through environment variables. It gives the opportunity to reuse already existing configs or secrets in the environment where your application is being deployed (in fact, the motivation of this library is to take advantage of `ConfigMaps` and `Secrets` in `Kubernetes`).
+
+Sometimes using environment variables to configure the entire application can be challenging and repeatable. For example, if your application uses a `mongo` connection string, then in `.net core` you would have two options (there are more options but this two are the nicest):
+1. Define the connection string in each `appsettings.{environment}.json` like this:
+* `appsettings.Development.json`: `mongodb://dev-user:dev-pass@dev-host:dev-port`.
+* `appsettings.Production.json`: `mongodb://prod-user:prod-pass@prod-host:prod-port`.
+* And so on for all your environments.
+
+2. Pass the connection string as environment variable. So if you use different infrastructure in each environment you must configure your run files to have this tedious conn string (and we are using mongo as example and not a RDB conn string). This could be a `launchSettings.json` in dev, `docker-compose.yml` in qa or `Kubernetes` yamls in prod.
+
+
+This means that in every environment you must hardcode the entire conn string. There is no midpoint, even when it's clear that the conn string is a static template that has dynamic variables depending on the environment where your application is running.
 
 ### TODOs
 - [ ] Add unit tests.
