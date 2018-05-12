@@ -99,4 +99,9 @@ public class Startup
 
 **FAQ**: Why the *placeholderPrefixes*? Just to be sure that the values being replace in your configuration are the one that you are expecting to be replaced.
 
+### TODOs
+- [ ] Add unit tests.
+- [ ] Add CI.
+- [ ] Improve and add examples.
+- [ ] Support not having the *placeholderPrefixes* parameter.
 
