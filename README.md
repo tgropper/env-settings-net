@@ -86,7 +86,7 @@ public class Startup
 }
 ```
 
-**FAQ**: Why the *placeholderPrefixes*? Just to be sure that the values being replace in your configuration are the one that you are expecting to be replaced.
+**FAQ**: Why the *placeholderPrefixes*? Just to be sure that the values being replaced in your configuration are the one that you are expecting to be replaced.
 
 ## Example
 
@@ -107,7 +107,7 @@ docker run -it -p 8000:80 -e ASPNETCORE_ENVIRONMENT=Development -e MONGO_HOST=lo
 
 ## Motivation
 
-Good application configuration *must* be through environment variables. It gives the opportunity to reuse already existing configs or secrets in the environment where your application is being deployed (in fact, the motivation of this library is to take advantage of `ConfigMaps` and `Secrets` in `Kubernetes`).
+A good application configuration *must* be through environment variables. It gives the opportunity to reuse already existing configs or secrets in the environment where your application is being deployed (in fact, the motivation of this library is to take advantage of `ConfigMaps` and `Secrets` in `Kubernetes`).
 
 Sometimes using environment variables to configure the entire application can be challenging and repeatable. For example, if your application uses a `mongo` connection string, then in `.net core` you would have two options (there are more options but this two are the nicest):
 1. Define the connection string in each `appsettings.{environment}.json` like this:
