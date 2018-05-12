@@ -88,6 +88,16 @@ public class Startup
 
 **FAQ**: Why the *placeholderPrefixes*? Just to be sure that the values being replace in your configuration are the one that you are expecting to be replaced.
 
+## Example
+
+Rename the `launchSettings-example.json` to `launchSettings.json` and then run the example using the `dotnet` CLI or within the `Visual Studio`.
+
+```
+cd .\examples\EnvSettings.Example.WebApp\
+dotnet build
+dotnet run --launch-profile {Environment} // try using different values (Development|Staging) to see different outputs
+```
+
 ## Motivation
 
 Good application configuration *must* be through environment variables. It gives the opportunity to reuse already existing configs or secrets in the environment where your application is being deployed (in fact, the motivation of this library is to take advantage of `ConfigMaps` and `Secrets` in `Kubernetes`).
