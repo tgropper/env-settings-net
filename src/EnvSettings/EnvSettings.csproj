@@ -13,7 +13,7 @@
     <Description>Replace placeholders from appsettings files with values loaded from environment variables.</Description>
     <PackageLicenseUrl>https://github.com/tgropper/env-settings-net/blob/master/LICENSE</PackageLicenseUrl>
     <Copyright>MIT License</Copyright>
-    <PackageTags>dotnet, net-standard, environment-variables</PackageTags>
+    <PackageTags>net-standard, environment-variables, configuration</PackageTags>
     <PackageReleaseNotes>
     </PackageReleaseNotes>
   </PropertyGroup>
