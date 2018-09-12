@@ -16,11 +16,13 @@ Following with the previous example, you can have an *appsettings.json* file wit
 ```json
 {
   "MongoConfig": {
-    "ConnectionString": "mongodb://MONGO_USER:MONGO_PASS@MONGO_HOST:MONGO_PORT",
-    "Database": "MONGO_DATABASE"
+    "ConnectionString": "mongodb://${MONGO_USER}:${MONGO_PASS}@${MONGO_HOST}:${MONGO_PORT}",
+    "Database": "${MONGO_DATABASE}"
   }
 }
 ```
+
+**NOTE**: Since version `2.0.0` the syntax of the placeholders **must** be `${...}`.
 
 And then load from the environment variables the values to replace the placeholders, for example:
 
@@ -65,7 +67,7 @@ services:
       - MONGO_DATABASE=env-settings-net
 ```
 
-To make this happen, the *merge* process is triggered using the `IConfigurationBuilder.Build(params string[] placeholderPrefixesToReplace)` extension:
+To make this happen, the *merge* process is triggered using the `IConfigurationBuilder.BuildAndReplacePlaceholders(bool replaceOnEmpty = true)` extension:
 
 **Startup**
 ```cs
@@ -80,15 +82,15 @@ public class Startup
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .AddEnvironmentVariables();
 
-        Configuration = builder.Build("MONGO");
+        Configuration = builder.BuildAndReplacePlaceholders();
     }
     ...
 }
 ```
 
-**FAQ**: Why the *placeholderPrefixes*? Just to be sure that the values being replaced in your configuration are the one that you are expecting to be replaced.
+**NOTE**: Since version `2.0.0` the *placeholderPrefixes* argument is no longer used, since the process scans for the syntax of placeholders to replace (`${...}`).
 
-**IMPORTANT**: It is highly recommended that you combine this library with [`EnvSafe`](https://github.com/tgropper/env-safe-net) to prevent unexpected behaviours in runtime. If you forget any env var that has to replace a placeholder, then your configuration will keep that placeholder as the variable value.
+**IMPORTANT**: It is highly recommended that you combine this library with [`EnvSafe`](https://github.com/tgropper/env-safe-net) to prevent unexpected behaviours in runtime. If you forget any env var that has to replace a placeholder, then your configuration will keep that placeholder as the variable value if `replaceOnEmpty` is false, or empty if `replaceOnEmpty` is true (this is de default).
 
 ## Example
 
@@ -124,7 +126,7 @@ This means that in every environment you must hardcode the entire conn string. T
 
 ### TODOs
 - [ ] Add unit tests.
-- [ ] Add CI.
+- [x] Add CI.
 - [ ] Improve and add examples.
-- [ ] Support not having the *placeholderPrefixes* parameter.
+- [x] Support not having the *placeholderPrefixes* parameter.
 
