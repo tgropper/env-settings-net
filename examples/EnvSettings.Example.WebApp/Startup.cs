@@ -22,7 +22,7 @@ namespace EnvSettings.Example.WebApp
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
-            Configuration = builder.Build("MONGO");
+            Configuration = builder.BuildAndReplacePlaceholders();
         }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
