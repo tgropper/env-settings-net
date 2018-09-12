@@ -1,7 +1,10 @@
 # env-settings-net
 Replace placeholders from appsettings files with values loaded from environment variables.
 
-## Install [![NuGet](https://img.shields.io/nuget/v/EnvSettings.svg)](https://www.nuget.org/packages/EnvSettings)
+[![Build Status](https://travis-ci.org/tgropper/env-settings-net.svg?branch=master)](https://travis-ci.org/tgropper/env-settings-net)
+[![NuGet](https://img.shields.io/nuget/v/EnvSettings.svg)](https://www.nuget.org/packages/EnvSettings)
+
+## Install
 From the package manager console:
 ```
 PM> Install-Package EnvSettings
