@@ -1,14 +1,11 @@
-﻿using System.Linq;
-
-namespace Microsoft.Extensions.Configuration
+﻿namespace Microsoft.Extensions.Configuration
 {
     public static class IConfigurationBuilderExtensions
     {
-        public static IConfiguration Build(this IConfigurationBuilder @this, params string[] placeholderPrefixesToReplace)
+        public static IConfiguration BuildAndReplacePlaceholders(this IConfigurationBuilder @this)
         {
             var configuration = @this.Build();
-            if (placeholderPrefixesToReplace != null & placeholderPrefixesToReplace.Any())
-                configuration.ReplacePlaceholders(placeholderPrefixesToReplace);
+            configuration.ReplacePlaceholders();
 
             return configuration;
         }

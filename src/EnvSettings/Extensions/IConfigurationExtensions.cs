@@ -5,34 +5,18 @@ namespace Microsoft.Extensions.Configuration
 {
     public static class IConfigurationExtensions
     {
-        public static IConfiguration ReplacePlaceholders(this IConfiguration @this, params string[] placeholderPrefixes)
+        public static IConfiguration ReplacePlaceholders(this IConfiguration @this)
         {
             if (@this == null) throw new System.ArgumentNullException(nameof(@this));
-            if (placeholderPrefixes == null || placeholderPrefixes.Any() == false) throw new System.ArgumentNullException(nameof(placeholderPrefixes));
 
-            var enumerable = @this.AsEnumerable();
-            var keyValuesToMerge = enumerable
-                .Where(keyValue => !string.IsNullOrEmpty(keyValue.Value) && placeholderPrefixes.Any(prefix => keyValue.Value.Contains(prefix)))
-                .ToList();
-            var domainKeyValues = enumerable
-                .Where(keyValue => placeholderPrefixes.Any(prefix => keyValue.Key.StartsWith($"{prefix}_")))
-                .ToDictionary(x => x.Key, x => x.Value);
+            var valueToReplaceRegex = new Regex(@"(?<=\$\{)([a-zA-Z0-9_]+)(?=\})");
 
-            foreach (var keyValue in keyValuesToMerge)
-            {
-                var value = keyValue.Value;
-                if (string.IsNullOrEmpty(value))
-                    continue;
-
-                foreach (var domainKeyValue in domainKeyValues)
-                {
-                    var regex = new Regex(domainKeyValue.Key);
-                    if (regex.IsMatch(value))
-                        value = regex.Replace(value, domainKeyValue.Value);
-                }
-
-                @this[keyValue.Key] = value;
-            }
+            @this.AsEnumerable()
+                .Where(kv => !string.IsNullOrEmpty(kv.Value) && valueToReplaceRegex.IsMatch(kv.Value))
+                .ToList()
+                .ForEach(kv => valueToReplaceRegex.Matches(kv.Value).Cast<Match>()
+                    .Select(x => x.Value).ToList()
+                    .ForEach(match => @this[kv.Key] = @this[match] != null ? new Regex($"\\${{{match}}}").Replace(@this[kv.Key], @this[match]) : null));
 
             return @this;
         }
