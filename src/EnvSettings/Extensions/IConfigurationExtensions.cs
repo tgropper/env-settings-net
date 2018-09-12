@@ -5,7 +5,7 @@ namespace Microsoft.Extensions.Configuration
 {
     public static class IConfigurationExtensions
     {
-        public static IConfiguration ReplacePlaceholders(this IConfiguration @this)
+        public static IConfiguration ReplacePlaceholders(this IConfiguration @this, bool replaceOnEmpty = true)
         {
             if (@this == null) throw new System.ArgumentNullException(nameof(@this));
 
@@ -16,7 +16,9 @@ namespace Microsoft.Extensions.Configuration
                 .ToList()
                 .ForEach(kv => valueToReplaceRegex.Matches(kv.Value).Cast<Match>()
                     .Select(x => x.Value).ToList()
-                    .ForEach(match => @this[kv.Key] = @this[match] != null ? new Regex($"\\${{{match}}}").Replace(@this[kv.Key], @this[match]) : null));
+                    .ForEach(match => @this[kv.Key] = @this[match] != null
+                        ? new Regex($"\\${{{match}}}").Replace(@this[kv.Key], @this[match])
+                        : replaceOnEmpty ? new Regex($"\\${{{match}}}").Replace(@this[kv.Key], string.Empty) : @this[kv.Key]));
 
             return @this;
         }
