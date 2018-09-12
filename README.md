@@ -93,7 +93,7 @@ public class Startup
 
 **NOTE**: Since version `2.0.0` the *placeholderPrefixes* argument is no longer used, since the process scans for the syntax of placeholders to replace (`${...}`).
 
-**IMPORTANT**: It is highly recommended that you combine this library with [`EnvSafe`](https://github.com/tgropper/env-safe-net) to prevent unexpected behaviours in runtime. If you forget any env var that has to replace a placeholder, then your configuration will keep that placeholder as the variable value if `replaceOnEmpty` is false, or empty if `replaceOnEmpty` is true (this is de default).
+**IMPORTANT**: It is highly recommended that you combine this library with [`EnvSafe`](https://github.com/tgropper/env-safe-net) to prevent unexpected behaviours in runtime. If you forget any env var that has to replace a placeholder, then your configuration will keep that placeholder as the variable value if `replaceOnEmpty` is false, or empty if `replaceOnEmpty` is true (this is the default).
 
 ## Example
 
