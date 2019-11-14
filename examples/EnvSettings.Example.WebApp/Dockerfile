@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore-build:2.0 AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0.100-alpine3.9 AS build
 WORKDIR /app
 
 COPY src/EnvSettings/*.csproj ./src/EnvSettings/
@@ -14,7 +14,7 @@ RUN dotnet restore EnvSettings.Example.WebApp.csproj
 COPY examples/EnvSettings.Example.WebApp/. ./
 RUN dotnet publish EnvSettings.Example.WebApp.csproj -o /app/out
 
-FROM microsoft/aspnetcore:2.0
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0.0-alpine3.9 AS runtime
 WORKDIR /app
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "EnvSettings.Example.WebApp.dll"]

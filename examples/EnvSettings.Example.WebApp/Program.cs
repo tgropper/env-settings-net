@@ -6,7 +6,7 @@ namespace EnvSettings.Example.WebApp
 {
     public class Program
     {
-        public async static Task Main(string[] args) => await BuildWebHost(args).RunAsync();
+        public static async Task Main(string[] args) => await BuildWebHost(args).RunAsync();
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
